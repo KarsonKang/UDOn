@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/opt/ros/foxy/include/**",
+        "/home/ubuntu2/UDOn_ws/src/dynamixel_sdk/include/**",
+        "/home/ubuntu2/UDOn_ws/src/imu_tools/imu_complementary_filter/include/**",
+        "/home/ubuntu2/UDOn_ws/src/imu_tools/imu_filter_madgwick/include/**",
+        "/home/ubuntu2/UDOn_ws/src/serial/include/**",
+        "/home/ubuntu2/UDOn_ws/src/udon_controller/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

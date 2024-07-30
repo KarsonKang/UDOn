@@ -1,0 +1,7 @@
+KERNEL=="ttyUSB2", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", SYMLINK+="imu_usb"
+
+KERNEL=="ttyUSB3", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", SYMLINK+="sllidar_usb"
+
+KERNEL=="ttyUSB1", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE:="0777", SYMLINK+="udon_dynamixel_usb"
+
+KERNEL=="ttyUSB0", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE:="0777", SYMLINK+="arm_dynamixel_usb"

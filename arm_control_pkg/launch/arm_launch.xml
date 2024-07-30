@@ -1,0 +1,7 @@
+<launch>
+    <node pkg = "arm_control_pkg" exec = "arm_control_node" />
+    
+    <node pkg = "arm_control_pkg" exec = "pos_pub_node" />
+
+    <node pkg = "camera_test_pkg" exec = "realsense_on_node" output = "screen"/>
+</launch>

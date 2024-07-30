@@ -1,0 +1,23 @@
+<launch>
+    <!-- <node pkg = "teleop_twist_keyboard" exec = "teleop_twist_keyboard" /> -->
+
+    <node pkg = "udon_controller" exec = "udon_controller" />
+
+    <let name = "urdf_path" 
+        value = "$(find-pkg-share udon_controller)/urdf/udon.urdf.xacro" />
+
+    <let name = "rviz_config_path"
+        value = "$(find-pkg-share udon_controller)/rviz/udon_config.rviz" />
+    
+    <node pkg = "robot_state_publisher" exec = "robot_state_publisher">
+        <param name = "robot_description"
+            value = "$(command 'xacro $(var urdf_path)')" />
+    </node>
+
+    <node pkg="tf2_ros" exec = "static_transform_publisher" name = "odom_to_base_link_broadcaster"
+        output = "screen" args = "0 0 0 0 0 0 1 odom footprint" />
+
+    <node pkg = "rviz2" exec = "rviz2" output = "screen" 
+        args = "-d $(var rviz_config_path)" />
+        
+</launch>

@@ -1,0 +1,188 @@
+<?xml version = "1.0" ?>
+<robot xmlns:xacro = "http://www.ros.org/wiki/xacro">
+
+    <xacro:property name = "base_length" value = "0.64" />
+    <xacro:property name = "base_width" value = "0.36" />
+    <xacro:property name = "base_height" value = "0.24" />
+
+    <xacro:property name = "w_frame_length" value = "0.81" />
+    <xacro:property name = "w_frame_width" value = "0.08" />
+    <xacro:property name = "w_frame_height" value = "0.21" />
+
+    <!-- <xacro:property name = "support_wheel_radius" value = "0.025" /> -->
+
+    <xacro:property name = "lidar_radius" value = "0.05" />
+    <xacro:property name = "lidar_length" value = "0.06" />
+
+
+    <link name = "footprint">
+    </link>
+
+    <link name = "base_link">
+        <visual>
+            <geometry>
+                <box size = "${base_length} ${base_width} ${base_height}" />
+            </geometry>
+            <origin xyz = "0 0 0" rpy = "0 0 0" />
+            <material name = "white" />
+        </visual>
+        <!--add collision property-->
+        <collision>
+            <geometry>
+                <box size = "${base_length} ${base_width} ${base_height}" />
+            </geometry>
+            <origin xyz = "0 0 0" rpy = "0 0 0" />
+        </collision>
+        <!--add inertial property-->
+        <xacro:box_inertial m = "15.0" l = "${base_length}" w = "${base_width}" h = "${base_height}"
+                            xyz = "0 0 0" rpy = "0 0 0" />
+    </link>
+
+    <joint name = "base_joint" type = "fixed">
+        <parent link = "footprint" />
+        <child link = "base_link" />
+        <origin xyz = "0 0 ${(base_height + w_frame_height) / 2}" rpy = "0 0 0" />
+    </joint>
+
+    <link name = "lidar_link">
+        <visual>
+            <geometry>
+                <cylinder radius="${lidar_radius}" length="${lidar_length}" />
+            </geometry>
+            <origin xyz = "0.0 0.0 0.0" rpy = "0.0 0.0 0.0" />
+            <material name = "green" />
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${lidar_radius}" length="${lidar_length}"/>
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </collision>
+        <xacro:cylinder_inertial m = "0.5" r = "${lidar_radius}" h = "${lidar_length}" 
+                                 xyz = "0.0 0.0 0.0" rpy = "0.0 0.0 0.0" />
+    </link>
+
+    <joint name="lidar_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="lidar_link"/>
+        <origin xyz = "${(base_length) / 2.0 + lidar_radius} 0 0" rpy = "0 0 ${pi}" />
+        <axis xyz="0.0 0.0 0.0"/>
+    </joint>
+
+    <link name = "right_frame">
+        <visual>
+            <geometry>
+                <box size = "${w_frame_length} ${w_frame_width} ${w_frame_height}" />
+            </geometry>
+            <origin xyz = "0 0 0" rpy = "0 0 0" />
+            <material name = "blue" />
+        </visual>
+        <collision>
+            <geometry>
+                <box size = "${w_frame_length} ${w_frame_width} ${w_frame_height}" />
+            </geometry>
+            <origin xyz = "0 0 0" rpy = "0 0 0" />
+        </collision>
+        <xacro:box_inertial m = "5.0" l = "${w_frame_length}" w = "${w_frame_width}" h = "${w_frame_height}"
+                            xyz = "0 0 0" rpy = "0 0 0" />
+    </link>
+
+    <link name = "left_frame">
+        <visual>
+            <geometry>
+                <box size = "${w_frame_length} ${w_frame_width} ${w_frame_height}" />
+            </geometry>
+            <origin xyz = "0 0 0" rpy = "0 0 0" />
+            <material name = "blue" />
+        </visual>
+        <collision>
+            <geometry>
+                <box size = "${w_frame_length} ${w_frame_width} ${w_frame_height}" />
+            </geometry>
+            <origin xyz = "0 0 0" rpy = "0 0 0" />
+        </collision>
+        <xacro:box_inertial m = "5.0" l = "${w_frame_length}" w = "${w_frame_width}" h = "${w_frame_height}"
+                            xyz = "0 0 0" rpy = "0 0 0" />
+    </link>
+
+
+    <link name = "imu_link">
+        <visual>
+            <geometry>
+                <box size="0.045 0.04 0.01"/>
+            </geometry>
+            <origin xyz = "0 0 0" rpy = "0 0 0" />
+            <material name = "white" />
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.045 0.04 0.01"/>
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </collision>
+        <xacro:box_inertial m = "0.1" l = "0.045" w = "0.04" h = "0.01"
+                            xyz = "0 0 0" rpy = "0 0 0" />
+    </link>
+
+    <!-- IMU joint-->
+    <joint name = "base_imu_joint" type = "fixed">
+        <parent link = "base_link" />
+        <child link = "imu_link" />
+        <origin xyz = "0 0 0" rpy = "0 0 0" />
+        <axis xyz = "0 0 0" />
+    </joint>
+
+    <link name = "cam_link">
+        <visual>
+            <geometry>
+                <box size="0.025 0.08 0.025"/>
+            </geometry>
+            <origin xyz = "0 0 0" rpy = "0 0 0" />
+            <material name = "red" />
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.025 0.08 0.025"/>
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </collision>
+        <xacro:box_inertial m = "0.1" l = "0.08" w = "0.025" h = "0.025"
+                            xyz = "0 0 0" rpy = "0 0 0" />
+    </link>
+
+    <joint name = "base_cam_joint" type = "fixed">
+        <parent link = "base_link" />
+        <child link = "cam_link" />
+        <origin xyz = "${(base_length) / 2.0 + 0.01} 0 ${(base_height) / 2.0}" rpy = "0 0 0" />
+        <axis xyz = "0 0 0" />
+    </joint>
+
+    <!--wheel joint-->
+    <joint name = "base_left_frame_joint" type = "fixed">
+        <parent link = "base_link" />
+        <child link = "left_frame" />
+        <origin xyz = "0 ${(base_width + w_frame_width) / 2.0} ${-base_height / 2.0}" rpy = "0 0 0" />
+        <axis xyz = "0 0 0" />
+    </joint>
+
+    <joint name = "base_right_frame_joint" type = "fixed">
+        <parent link = "base_link" />
+        <child link = "right_frame" />
+        <origin xyz = "0 ${-(base_width + w_frame_width) / 2.0} ${-base_height / 2.0}" rpy = "0 0 0" />
+        <axis xyz = "0 0 0" />
+    </joint>
+
+    <!--model color set in gazebo-->
+    <!-- <gazebo reference = "base_link">
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference = "right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    
+    <gazebo reference = "right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo> -->
+
+</robot>

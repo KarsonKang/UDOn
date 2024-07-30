@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns="http://www.ros.org/wiki/xacro">
+
+    <ros2_control name = "UDOn_control" type = "system">
+        <hardware>
+            <plugin>dynamixel_hardware_interface/DynamixelHardwareInterface</plugin>
+            <param name = "port_name">/dev/ttyUSB0</param>
+            <param name = "baudrate">56700</param>
+
+        </hardware>
+
+        <joint name="base_left_wheel_joint">
+            <param name = "id">1</param>
+            <param name = "motor_type">XM430-W350-R</param>
+            <conmand_interface name = "velocity">
+                <param name = "min">-100</param>
+                <param name = "max">100</param>
+            </conmand_interface>
+            <state_interface name = "velocity" />
+            <state_interface name = "position" />
+        </joint>
+
+        <joint name="base_right_wheel_joint">
+            <param name = "id">2</param>
+            <param name = "motor_type">XM430-W350-R</param>
+            <conmand_interface name = "velocity">
+                <param name = "min">-100</param>
+                <param name = "max">100</param>
+            </conmand_interface>
+            <state_interface name = "velocity" />
+            <state_interface name = "position" />
+        </joint>
+
+    </ros2_control>
+
+</robot>

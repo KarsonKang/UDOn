@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<robot name = "UDOn" xmlns:xacro = "http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename = "properties.xacro" />
+    <xacro:include filename = "model.xacro" />
+
+</robot>
